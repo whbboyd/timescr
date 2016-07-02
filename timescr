@@ -1,0 +1,40 @@
+#!/bin/bash
+
+BOUNCES=20
+LULL=10
+BOUNCETIME=0.05
+TIMEFORMAT='+%Y-%m-%d %H:%M:%S %Z'
+
+LEN=$(date "${TIMEFORMAT}" | tr -d $'\n' | wc -c)
+bounces=0
+
+tput clear
+while true; do
+	((bounces++))
+
+	if [ ${bounces} -lt ${BOUNCES} ]; then
+		ROWS=$(tput lines)
+		COLS=$(tput cols)
+	else
+		bounces=-$LULL
+	fi;
+
+	tput -S <<EOF
+cup ${ROW} ${COL}
+setaf 1
+bold
+EOF
+	date "${TIMEFORMAT}" | tr -d $'\n'
+	tput sgr0
+
+	if [ ${bounces} -gt 0 ]; then
+		ROW=$((${RANDOM} % ${ROWS}))
+		COL=$((${RANDOM} % (${COLS} - ${LEN})))
+		sleep ${BOUNCETIME}
+		tput clear
+	else
+		sleep 1
+	fi
+
+done
+
