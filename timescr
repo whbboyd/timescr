@@ -1,9 +1,9 @@
 #!/bin/bash
 
-BOUNCES=20
-LULL=10
-BOUNCETIME=0.05
-TIMEFORMAT='+%Y-%m-%d %H:%M:%S %Z'
+BOUNCES=${BOUNCES:-20}
+LULL=${LULL:-10}
+BOUNCETIME=${BOUNCETIME:-0.05}
+TIMEFORMAT=${TIMEFORMAT:-'+%Y-%m-%d %H:%M:%S %Z'}
 
 LEN=$(date "${TIMEFORMAT}" | tr -d $'\n' | wc -c)
 bounces=0
